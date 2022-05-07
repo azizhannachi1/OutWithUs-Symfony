@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+
+<section id="main-content">
+  <section class="wrapper">
+    <h3><i class="fa fa-angle-right"></i> Modifier votre Publication</h3>
+  
+   
+    <div class="row mt">
+      <div class="col-lg-12">
+        <div class="form-panel">
+          <div class="form">
+            {{ form_start(f,{'attr':{'class':'cmxform form-horizontal style-form', 'novalidate':'novalidate'}}) }}
+              <div class="form-group ">
+                <label class="control-label col-lg-2">Titre</label>
+                <div class="col-lg-10">
+              
+                  {{form_widget(f.titre,{'attr':{'class':'form-control', 'placeholder': 'Le titre du publication'}})}}
+                  
+                </div>
+              </div>
+              <div class="form-group ">
+                <label class="control-label col-lg-2">Text</label>
+                <div class="col-lg-10">
+              
+                  {{form_widget(f.text,{'attr':{'class':'form-control'}})}}
+                 
+                </div>
+              </div>
+
+              <div>
+                <label class="control-label col-lg-2">Image du publication</label>
+                <div class="col-lg-10">
+                  {% if publication.image|length > 0 %}
+                <img src="{{ asset('uploads/'~ publication.image ) }}" width="250" height="150" alt="{{ publication.titre }}">
+                {% else %}
+                <img src="{{ asset('uploads/'~ "Not Found.jpg" ) }}" width="250" height="150" alt="{{ publication.titre }}">
+                {% endif %}
+                </div>
+            </div>
+
+              <div class="form-group ">
+                <label class="control-label col-lg-2">Modifier l'image</label>
+                <div class="col-lg-10">
+              
+                  {{form_widget(f.image,{'attr':{'class':'form-control'}})}}
+                 
+                </div>
+              </div>
+             
+              <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-10">
+                 
+                  {{form_widget(f.Modifier,{'attr':{'class':'btn btn-theme'}})}}
+                </div>
+              </div>
+                      {{ form_end(f) }}
+          </div>
+       
+          <br>         
+        </div>     
+      </div>
+      </div>   
+  </section>
+</section>
+
+ 
+
+
+{% endblock %}

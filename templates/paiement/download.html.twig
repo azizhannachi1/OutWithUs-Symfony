@@ -1,0 +1,35 @@
+{% extends 'base-pdf.html.twig' %}
+
+{% block title %} Listes des paiements des utilisateurs
+    
+{% endblock %}
+{% block body  %}
+<h1> Liste des paiements</h1>
+<table border="1">
+<thead>
+    <tr>
+        <th>carte</th>
+        <th>Exp_Year</th>
+        <th>Exp_Month</th>
+        <th>CVC</th>
+        <th>Prix</th>
+        <th>Status</th>
+        <th>Email</th>
+    </tr>
+</thead>
+<tbody>
+    {% for p in paiement %}
+        <tr>
+            <td>{{ p.carte }}</td>
+            <td>{{ p.year }}</td>
+            <td>{{ p.month }}</td>
+            <td>{{ p.cvc }}</td>
+            <td>{{ p.prix }}</td>
+            <td>{{ p.status }}</td>
+            <td>{{ p.email }}</td>
+        </tr>
+    {% endfor %}
+</tbody>
+</table>
+
+{% endblock %}

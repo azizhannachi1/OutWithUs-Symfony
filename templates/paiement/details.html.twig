@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+<br /><br /><br /><br />
+
+
+       <section id="main-content">
+      <section class="wrapper">
+        <h3><i class="fa fa-angle-right"></i> Liste des Paiements</h3>
+        <div class="row mb">
+          <!-- page start-->
+          <div class="content-panel">
+        <a href="{{ path('paiement_download',{'id':paiement.id}) }}" class="btn btn-primary w-40">Télécharger les données</a>
+        
+        <div class="form-panel">
+            <div class="form">
+              {{ form_start(f,{'attr':{'class':'cmxform form-horizontal style-form'}} ) }}
+              
+              
+                <div class="form-group">
+                  <div class="col-3">
+                   
+                    {{form_widget(f.Generer,{'attr':{'class':'btn btn-primary w-100'}})}}
+                  </div>
+                </div>
+                        {{ form_end(f) }}
+            </div>
+          </div>
+
+
+            <div class="adv-table">             
+            </div>
+            
+          </div>
+          <!-- page end-->
+        </div>
+        <!-- /row -->
+      </section>
+      <!-- /wrapper -->
+    </section>
+
+{% endblock %}

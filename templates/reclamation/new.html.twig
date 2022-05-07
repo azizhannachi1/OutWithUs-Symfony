@@ -1,0 +1,80 @@
+{% extends 'base2.html.twig' %}
+{% block body %}
+
+   <!-- ======= Breadcrumbs ======= -->
+   <section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Ajouter une réclamation</h2>
+        
+      </div>
+
+    </div>
+  </section><!-- End Breadcrumbs -->
+
+
+
+
+ <!-- ======= Contact Section ======= -->
+ <section id="contact" class="contact">
+    <div class="container">
+
+
+      <div class="row mt-5">
+
+       
+
+        <div class="col-lg-8 mt-5 mt-lg-0">
+
+            {{ form_start(f,{'attr':{'class':'cmxform form-horizontal style-form', 'novalidate':'novalidate'}}) }}
+            <div class="row">
+              <div class="col-md-6 form-group">
+                {{form_widget(f.nom,{'attr':{'class':'form-control', 'placeholder': 'Votre nom...','pattern': '[a-zA-Z]*'}})}}
+                {{form_errors(f.nom,{'attr':{'class':'text-danger'}}) }}
+                
+              </div>
+
+              <div class="col-md-6 form-group">
+                {{form_widget(f.prenom,{'attr':{'class':'form-control', 'placeholder': 'Votre prenom...'}})}}
+                {{form_errors(f.prenom,{'attr':{'class':'text-danger'}}) }}
+                
+              </div>
+
+              <div class="col-md-6 form-group mt-3 mt-md-0">
+                {{form_widget(f.prenom,{'attr':{'class':'form-control', 'placeholder': 'Votre prenom...'}})}}
+                {{form_errors(f.prenom,{'attr':{'class':'text-danger'}}) }}
+                
+              </div>
+            </div>
+            <div class="form-group mt-3">
+                {{form_widget(f.email,{'attr':{'class':'form-control', 'placeholder': 'Votre email...'}})}}
+                {{form_errors(f.email,{'attr':{'class':'text-danger'}}) }}
+              </div>
+            <div class="form-group mt-3">
+                {{form_widget(f.sujet,{'attr':{'class':'form-select'}})}} 
+            </div>
+            <div class="form-group mt-3">
+                {{form_widget(f.message,{'attr':{'class':'form-control', 'placeholder': 'Votre message...'}})}}
+                {{form_errors(f.message,{'attr':{'class':'text-danger'}}) }}
+            </div>
+           
+            <div class="text-center">                
+                {{form_widget(f.Ajouter,{'attr':{'class':'btn btn-primary w-100','type':'submit'}})}}              
+            </div>
+            {{ form_end(f) }}
+
+        </div>
+
+      </div>
+
+    </div>
+  </section><!-- End Contact Section -->
+
+
+
+
+ 
+
+
+{% endblock %}

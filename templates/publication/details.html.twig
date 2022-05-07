@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+<link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+
+<section id="main-content">
+    <section class="wrapper site-min-height">
+        <div class="row mt mb">
+            <div class="col-lg-12">
+                <h3><i class="fa fa-angle-right"></i> Publication par user</h3>
+                <br>
+
+
+                {% if publication.image|length > 0 %}
+                <img src="{{ asset('uploads/'~ publication.image ) }}" width="1100" height="400" alt="{{ publication.titre }}">
+                {% else %}
+                <img src="{{ asset('uploads/'~ "Not Found.jpg" ) }}" width="1100" height="400" alt="{{ publication.titre }}">
+                {% endif %}
+                <br><br><br>
+
+                <div class="row content-panel">
+                    <h2 class="centered">{{ publication.titre }}</h2>
+                    <div class="col-md-10 col-md-offset-1 mt mb">
+                        <div class="accordion" id="accordion2">
+                            <div class="accordion-group">
+
+
+                                <div id="collapseOne" class="accordion-body collapse in">
+                                    <div class="accordion-inner">
+                                        <p style="font-weight: 900;">{{ publication.text|striptags }}.</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="grix xs2 sm3 gutter-0 card">
+                    <div class="col-xs2 col-sm3">
+                        <h2>Liste des commentaires</h2>
+                        {% for comment in publication.comments %}
+                        <p>Publié le {{comment.createdAt|date("d/m/Y") }}</p>
+                        <div>{{comment.content|raw}}</div>
+                        {% if comment.userId == 24 %}
+                        <a href="{{ path('supprimer_commentaire',{'id':comment.id}) }}">                          
+                            Supprimer                          
+                        </a>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verticalycentered" href="{{ path('supprimer_commentaire',{'id':comment.id}) }}">
+                          Supprimer
+                        </button>
+                        <a href="{{ path('update_comment',{'id':comment.id}) }}">Modifier</a>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
+                            Modifier
+                          </button>
+                        {% endif %}
+				{% endfor %}
+                    </div>
+                    <div class="col-xs2 col-sm3" id="ajout-commentaire">
+                        <h2>Ajouter un commentaire</h2>
+                        {{ form(commentForm) }}
+                    </div>
+                </div>
+
+
+                      <!-- Modifier Modal-->
+                      <div class="modal fade" id="basicModal" tabindex="-1">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">Modifier Votre Commenaire</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            {{ form_start(form) }}
+                            <div class="modal-body">
+                                <div class="form-group ">
+                                    <label class="control-label col-lg-2">Content</label>
+                                    <div class="col-lg-10">
+                                  
+                                      {{form_widget(form.content,{'attr':{'class':'form-control' }})}}
+                                     
+                                    </div>
+                                  </div>
+                            </div>
+                            
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              {{form_widget(form.Update,{'attr':{'class':'btn btn-theme'}})}}
+                              
+                            </div>
+                            {{ form_end(form) }}
+                          </div>
+                        </div>
+                      </div><!-- End Modifier Modal-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            </div>
+        </div>
+    </section>
+</section>
+<script src="{{ asset('js/scripts.js')}}"></script>
+
+
+{% endblock %}

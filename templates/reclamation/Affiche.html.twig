@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+<br /><br /><br /><br />
+
+
+       <section id="main-content">
+      <section class="wrapper">
+        <h3><i class="fa fa-angle-right"></i> Liste des Réclamations</h3>
+        <div class="row mb">
+          <!-- page start-->
+          <div class="content-panel">
+          <form method="post" action=" {{ path('recherche') }}">
+            <label>Recherche</label>
+          <input type="text" name="search"> <input type="submit" vlaue="Rcherche">
+          </form>
+        
+            <div class="adv-table">
+              <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info">
+                <thead>
+                  <tr>
+                   
+                    <th>Sujet</th>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>email</th>
+                    <th>message</th>
+                    <th>date</th>
+                     
+                    <th class="hidden-phone">Supprimer</th>
+                    <th class="">Modifier</th>
+                  
+                  </tr>
+                </thead>
+                <tbody>
+         
+          <tr {% for r in reclamation %}>
+
+           
+            <td>{{ r.sujet.nom }}</td>
+               <td>{{ r.nom }}</td>
+                  <td>{{ r.prenom }}</td>
+                     <td>{{ r.email }}</td>
+                        <td>{{ r.message }}</td>
+                                            <td>{{ r.date ? r.Date|date('Y-m-d') : '' }}</td>
+                        
+            
+      
+            <td><a href="{{ path('d',{'id':r.id}) }}">Supprimer</a></td>
+            <td><a href="{{ path('modifier',{'id':r.id}) }}">Modifier</a></td>
+           
+           
+
+
+
+        </tr {% endfor %}>
+                </tbody>
+              </table>
+             
+            </div>
+          </div>
+          <!-- page end-->
+        </div>
+        {{ knp_pagination_render(reclamation) }}
+        <!-- /row -->
+      </section>
+      <!-- /wrapper -->
+    </section>
+
+{% endblock %}

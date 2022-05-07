@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<section id="main-content">
+  <section class="wrapper">
+    <h3><i class="fa fa-angle-right"></i> Modifier Votre Commentaire</h3>
+  
+    <div class="row mt">
+      <div class="col-lg-12">
+        
+        <div class="form-panel">
+          <div class="form">
+            {{ form_start(f,{'attr':{'class':'cmxform form-horizontal style-form'}}) }}
+              <div class="form-group ">
+                <label class="form-label">Votre Commentaire</label>
+                <div class="col-lg-10">
+              
+                  {{form_widget(f.content,{'attr':{'class':'form-control'}})}}
+                 
+                </div>
+              </div>
+            
+              <div class="form-group">
+                <div class="col-3">
+                 
+                  {{form_widget(f.Update,{'attr':{'class':'btn btn-primary w-100'}})}}
+                </div>
+              </div>
+                      {{ form_end(f) }}
+          </div>
+        </div>
+       
+      </div>
+     
+    </div>
+   
+
+
+
+
+  </section>
+
+</section> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ {% endblock %}

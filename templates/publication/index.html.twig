@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+<section id="main-content">
+    <section class="wrapper">
+        <h3><i class="fa fa-angle-right"></i> Découvrir nos publications</h3>
+        <div class="row mt">
+            <div class="col-lg-12 main-chart">
+
+                {% for p in publication %}
+
+                <div class="col-lg-4 col-md-4 col-sm-4 mb">
+                    <div class="product-panel-2 pn">
+                        {% if p.image|length > 0 %}
+                        <img src="{{ asset('uploads/'~ p.image ) }}" width="200"  height="120" alt="" >
+                        {% else %}
+                        <img src="{{ asset('uploads/'~ "404.png" ) }}" width="200" alt="">
+                        {% endif %}                      
+                      <h5 class="mt">
+                        {{ p.titre }}
+                        <a href="{{ path('publication_like', {'id': p.id}) }}" class="btn btn-link js-like">
+                           {% if p.isLikeByUserId(4) %}
+                           <i class="bi bi-hand-thumbs-up-fill"></i>
+                            {% else %}                            
+                            <i class="bi bi-hand-thumbs-up"></i>
+                            {% endif %}
+                            <span class="js-likes">{{ p.likes | length }}</span>
+                            <span class="js-label">J'aime</span>
+                            
+                        </a> 
+                      </h5>
+                      <h6>{{ p.text|striptags|u.truncate(20, '...') }}</h6>
+                      <a href="{{ path('details_publication', {id: p.id}) }}" class="btn btn-small btn-theme04">LIRE LA SUITE</a>
+                      </div>
+                  </div>
+
+
+
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</section>
+<script src="https://unpkg.com/axios@0.26.1/dist/axios.min.js"></script>
+<script>
+    function onClickBtnLike(event){
+      event.preventDefault();
+
+      const url=this.href;
+      const spanCount=this.querySelector('span.js-likes');
+      const icone= this.querySelector('i');
+
+      axios.get(url).then(function (response){
+          spanCount.textContent=response.data.likes;
+          if (icone.classList.contains('bi-hand-thumbs-up-fill'))
+              icone.classList.replace('bi-hand-thumbs-up-fill','bi-hand-thumbs-up');
+          else
+              icone.classList.replace('bi-hand-thumbs-up','bi-hand-thumbs-up-fill');
+      })
+    }
+
+    document.querySelectorAll('a.js-like').forEach(function (link){
+        link.addEventListener('click',onClickBtnLike);
+    })
+</script>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'base2.html.twig' %}
+{% block body %}
+
+   <!-- ======= Breadcrumbs ======= -->
+   <section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Ajouter une paiement</h2>
+        
+      </div>
+
+    </div>
+  </section><!-- End Breadcrumbs -->
+
+
+
+
+ <!-- ======= Contact Section ======= -->
+ <section id="contact" class="contact">
+    <div class="container">
+
+
+      <div class="row mt-5">
+
+       
+
+        <div class="col-lg-8 mt-5 mt-lg-0">
+
+            {{ form_start(f,{'attr':{'class':'cmxform form-horizontal style-form', 'novalidate':'novalidate'}}) }}
+            <div class="row">
+              <div class="form-group mt-3">
+                {{form_widget(f.carte,{'attr':{'class':'form-control', 'placeholder': 'Numéro de la carte'}})}}
+                {{form_errors(f.carte,{'attr':{'class':'text-danger'}}) }}
+                
+              </div>
+
+              <div class="col-md-6 form-group">
+                {{form_widget(f.year,{'attr':{'class':'form-control', 'placeholder': 'Année d expiration'}})}}
+                {{form_errors(f.year,{'attr':{'class':'text-danger'}}) }}
+                
+              </div>
+
+              <div class="col-md-6 form-group">
+                {{form_widget(f.month,{'attr':{'class':'form-control', 'placeholder': 'Mois d expiration'}})}}
+                {{form_errors(f.month,{'attr':{'class':'text-danger'}}) }}
+                
+              </div>
+
+              <div class="col-md-6 form-group mt-3 mt-md-0">
+                {{form_widget(f.cvc,{'attr':{'class':'form-control', 'placeholder': 'CVC'}})}}
+                {{form_errors(f.cvc,{'attr':{'class':'text-danger'}}) }}                
+              </div>
+
+            </div>
+            <div class="form-group mt-3">
+                {{form_widget(f.prix,{'attr':{'class':'form-control', 'placeholder': 'Prix'}})}}
+                {{form_errors(f.prix,{'attr':{'class':'text-danger'}}) }}
+              </div>
+           
+            <div class="form-group mt-3">
+                {{form_widget(f.email,{'attr':{'class':'form-control', 'placeholder': 'Votre email...'}})}}
+                {{form_errors(f.email,{'attr':{'class':'text-danger'}}) }}
+            </div>
+           
+            
+
+            <div class="text-center">                
+                {{form_widget(f.Ajouter,{'attr':{'class':'btn btn-primary w-100'}})}}              
+            </div>
+            {{ form_end(f) }}
+
+        </div>
+
+      </div>
+
+    </div>
+  </section><!-- End Contact Section -->
+
+
+
+
+ 
+
+
+{% endblock %}
