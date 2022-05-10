@@ -34,7 +34,9 @@
                 {{form_errors(f.carte,{'attr':{'class':'text-danger'}}) }}
                 
               </div>
-
+</div>
+<br/>
+<div class="row">
               <div class="col-md-6 form-group">
                 {{form_widget(f.year,{'attr':{'class':'form-control', 'placeholder': 'Année d expiration'}})}}
                 {{form_errors(f.year,{'attr':{'class':'text-danger'}}) }}
@@ -46,25 +48,29 @@
                 {{form_errors(f.month,{'attr':{'class':'text-danger'}}) }}
                 
               </div>
-
-              <div class="col-md-6 form-group mt-3 mt-md-0">
+            </div>
+            <br/>
+<div class="row">
+              <div class="col-md-6 form-group">
                 {{form_widget(f.cvc,{'attr':{'class':'form-control', 'placeholder': 'CVC'}})}}
                 {{form_errors(f.cvc,{'attr':{'class':'text-danger'}}) }}                
               </div>
 
-            </div>
-            <div class="form-group mt-3">
+            
+            <div class="col-md-6 form-group">
                 {{form_widget(f.prix,{'attr':{'class':'form-control', 'placeholder': 'Prix'}})}}
                 {{form_errors(f.prix,{'attr':{'class':'text-danger'}}) }}
               </div>
-           
+            </div>
+            <br/>
+              <div class="row">
             <div class="form-group mt-3">
                 {{form_widget(f.email,{'attr':{'class':'form-control', 'placeholder': 'Votre email...'}})}}
                 {{form_errors(f.email,{'attr':{'class':'text-danger'}}) }}
             </div>
-           
+          </div>
             
-
+<br/>
             <div class="text-center">                
                 {{form_widget(f.Ajouter,{'attr':{'class':'btn btn-primary w-100'}})}}              
             </div>

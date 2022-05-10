@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <div class="section section-team text-center">
+        <div class="container">
+            <h2 class="title">Nos Offres</h2>
+            <div class="team">
+                <div class="row">
+
+
+
+                    {% for i in tableoffre %}
+                        <div class="col-md-4">
+                            <div class="team-player">
+                                <h4 class="title">{{ i.Nom }}</h4>
+                                <p class="category text-primary">{{(i.date).format('d/m/Y')}}</p>
+                                <p class="description">{{ i.description  }}
+                                </p>
+                                <a href="#pablo" class="btn btn-primary btn-icon btn-round"><i class="fab fa-twitter"></i></a>
+                                <a href="#pablo" class="btn btn-primary btn-icon btn-round"><i class="fab fa-instagram"></i></a>
+                                <a href="#pablo" class="btn btn-primary btn-icon btn-round"><i class="fab fa-facebook-square"></i></a>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

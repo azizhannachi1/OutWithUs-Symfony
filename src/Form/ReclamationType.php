@@ -26,7 +26,7 @@ class ReclamationType extends AbstractType
                 'choice_label'=>'nom',
                 'multiple'=>False
             ])
-            ->add('telephone')
+           
             
          
         ;

@@ -13,6 +13,8 @@
         <div class="form-panel">
           <div class="form">
             {{ form_start(f,{'attr':{'class':'cmxform form-horizontal style-form'}}) }}
+            
+           
               <div class="form-group ">
                 <label class="control-label col-lg-2">Carte </label>
                 <div class="col-lg-10">
@@ -22,7 +24,7 @@
                 </div>
               </div>
               <div class="form-group ">
-                <label class="control-label col-lg-2">Expiration Year</label>
+                <label class="control-label col-lg-2">Année d'expiration</label>
                 <div class="col-lg-10">
               
                   {{form_widget(f.year,{'attr':{'class':'form-control'}})}}
@@ -30,7 +32,7 @@
                 </div>
               </div>
               <div class="form-group ">
-                <label class="control-label col-lg-2">Expiration Month</label>
+                <label class="control-label col-lg-2">Mois d'expiration</label>
                 <div class="col-lg-10">
               
                   {{form_widget(f.month,{'attr':{'class':'form-control'}})}}
@@ -55,7 +57,7 @@
               </div>
               
               <div class="form-group ">
-                <label class="control-label col-lg-2">Modifier le status</label>
+                <label class="control-label col-lg-3">Modifier le status</label>
                 <div class="col-lg-10">
                   
                      {{form_widget(f.status,{'attr':{'class':'form-control'}})}} 
@@ -72,11 +74,11 @@
                 
                 </div>
               </div> 
-
+<br/>
               <div class="form-group">
                 <div class="col-lg-offset-2 col-lg-10">
                  
-                  {{form_widget(f.Update,{'attr':{'class':'btn btn-theme'}})}}
+                  {{form_widget(f.Modifier,{'attr':{'class':'btn btn-primary'}})}}
                 </div>
               </div>
                       {{ form_end(f) }}

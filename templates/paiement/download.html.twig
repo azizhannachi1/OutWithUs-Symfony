@@ -8,6 +8,8 @@
 <table border="1">
 <thead>
     <tr>
+        <th>Utilisateur</th>
+        <th>Evénement</th>
         <th>carte</th>
         <th>Exp_Year</th>
         <th>Exp_Month</th>
@@ -20,6 +22,8 @@
 <tbody>
     {% for p in paiement %}
         <tr>
+            <td>{{ p.user.nom }}</td>
+            <td>{{ p.evenement.NomEvent }}</td>
             <td>{{ p.carte }}</td>
             <td>{{ p.year }}</td>
             <td>{{ p.month }}</td>

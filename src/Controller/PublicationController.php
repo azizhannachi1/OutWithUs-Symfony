@@ -20,25 +20,36 @@ use App\Entity\Comments;
 use App\Form\CommentsType;
 use App\Repository\CommentsRepository;
 use App\Entity\PublicationLike;
+use App\Repository\UserRepository;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 class PublicationController extends AbstractController
 {
     /**
      * @Route("/publication", name="publication")
      */
-    public function index(PublicationRepository $repository)
+    public function index(PublicationRepository $repository, PaginatorInterface $paginator, Request $request)
     {
         $publication=$repository->findAll();
-        return $this->render('publication/index.html.twig',['publication'=>$publication]);
+
+        $e = $paginator->paginate(
+            $publication,
+            $request->query->getInt('page', 1),
+            3
+        );
+        return $this->render('publication/index.html.twig',['publication'=>$e]);
     }
 
     /**
      * @param Request $request
      * @return \Symfony\Component\\HttpFoundation\Response
-     * @Route("publication/Add")
+     * @Route("publication/Add", name="ajouter_publication")
      */
-    function Add(Request $request, EntityManagerInterface $entityManager){
+    function Add(Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository){
         $publication = new Publication();
+        $user=$this->getUser();       
+        $publication->setUser($user);
         $form=$this->createForm(PublicationType::class,$publication);
         $form->add('Ajouter',SubmitType::class,
     ['attr'=>['formnovalidate'=> 'formnovalidate']]); 
@@ -86,9 +97,11 @@ class PublicationController extends AbstractController
 /**
      * @Route("publication/edit/{id}", name="publication_edit")
      */
-    public function edit(Request $request, Publication $publication, EntityManagerInterface $entityManager, $id, PublicationRepository $repository): Response
+    public function edit(Request $request, Publication $publication, EntityManagerInterface $entityManager, $id, PublicationRepository $repository, UserRepository $userRepository): Response
     {
         $publication=$repository->find($id);
+        $user=$this->getUser();       
+        $publication->setUser($user);
         $form = $this->createForm(PublicationType::class, $publication);
         $form->add('Modifier',SubmitType::class,
     ['attr'=>['formnovalidate'=> 'formnovalidate']]); 
@@ -165,7 +178,7 @@ class PublicationController extends AbstractController
      * @return \Symfony\Component\\HttpFoundation\Response
      * @Route("publication/details/{id}", name="details_publication")
      */
-    public function Details(PublicationRepository $repository, $id, Request $request, CommentsRepository $commentrepository)
+    public function Details(PublicationRepository $repository, $id, Request $request, CommentsRepository $commentrepository, UserRepository $userRepository)
     {
         
        // $publication = $repository->findOneBy(['id' => $id]);
@@ -181,6 +194,11 @@ class PublicationController extends AbstractController
         // Partie commentaires
         // On crée le commentaire "vierge"
         $comment = new Comments();
+
+
+        $user=$this->getUser();       
+        $comment->setUser($user);
+
 
         // On génère le formulaire
         $commentForm = $this->createForm(CommentsType::class, $comment);
@@ -266,7 +284,7 @@ class PublicationController extends AbstractController
     function Update(CommentsRepository $repository, $id, Request $request){
         $commentaire=$repository->find($id);
         $form=$this->createForm(CommentsType::class,$commentaire);
-        $form->add('Update',SubmitType::class);
+        $form->add('Modifier',SubmitType::class);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $em=$this->getDoctrine()->getManager();
@@ -289,11 +307,13 @@ class PublicationController extends AbstractController
    public function like(Publication $publication , EntityManagerInterface $manager, PublicationLikeRepository $likeRepository, Request $request):Response
    {
         //$user=$this->getUserid();
+        $user=$this->getUser();
+       // $userid = 4;
 
-        $userid = 4;
+       if (!$user) return $this->json(['code'=>403,'message'=>"unauthorized"],403);
 
-         if ($publication->isLikeByUserId(4)){
-             $like=$likeRepository->findOneBy(['publication'=>$publication , 'utilisateur'=>$userid]);
+         if ($publication->isLikeByUser($user)){
+             $like=$likeRepository->findOneBy(['publication'=>$publication , 'user'=>$user]);
              $manager->remove($like);
              $manager->flush();
 
@@ -305,7 +325,7 @@ class PublicationController extends AbstractController
          }
 
          $like= new PublicationLike();
-         $like->setPublication($publication)->setUtilisateur("4");
+         $like->setPublication($publication)->setUser($user);
          $manager->persist($like);
          $manager->flush();
 
@@ -315,6 +335,18 @@ class PublicationController extends AbstractController
          ],200);
 
    }
+
+  /**
+     * @param CommentsRepository $repository
+     * @return \Symfony\Component\\HttpFoundation\Response
+     * @Route("/AfficheComments", name="AfficheComments")
+     */
+    public function AfficheComments(CommentsRepository $repository){
+        
+        $commentaires=$repository->findAll();
+        return $this->render('publication/AfficheComments.html.twig',['commentaires'=>$commentaires]);
+    }
+    
 
 
 }

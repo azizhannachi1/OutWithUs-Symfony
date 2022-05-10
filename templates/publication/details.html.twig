@@ -1,121 +1,166 @@
-{% extends 'base.html.twig' %}
+{% extends 'base2.html.twig' %}
 
+{% block title %}
+<title>OutWithUs- Publication single</title>
+{% endblock %}
 
 {% block body %}
 <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 
-<section id="main-content">
-    <section class="wrapper site-min-height">
-        <div class="row mt mb">
-            <div class="col-lg-12">
-                <h3><i class="fa fa-angle-right"></i> Publication par user</h3>
-                <br>
-
-
-                {% if publication.image|length > 0 %}
-                <img src="{{ asset('uploads/'~ publication.image ) }}" width="1100" height="400" alt="{{ publication.titre }}">
-                {% else %}
-                <img src="{{ asset('uploads/'~ "Not Found.jpg" ) }}" width="1100" height="400" alt="{{ publication.titre }}">
-                {% endif %}
-                <br><br><br>
-
-                <div class="row content-panel">
-                    <h2 class="centered">{{ publication.titre }}</h2>
-                    <div class="col-md-10 col-md-offset-1 mt mb">
-                        <div class="accordion" id="accordion2">
-                            <div class="accordion-group">
-
-
-                                <div id="collapseOne" class="accordion-body collapse in">
-                                    <div class="accordion-inner">
-                                        <p style="font-weight: 900;">{{ publication.text|striptags }}.</p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div class="grix xs2 sm3 gutter-0 card">
-                    <div class="col-xs2 col-sm3">
-                        <h2>Liste des commentaires</h2>
-                        {% for comment in publication.comments %}
-                        <p>Publié le {{comment.createdAt|date("d/m/Y") }}</p>
-                        <div>{{comment.content|raw}}</div>
-                        {% if comment.userId == 24 %}
-                        <a href="{{ path('supprimer_commentaire',{'id':comment.id}) }}">                          
-                            Supprimer                          
-                        </a>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verticalycentered" href="{{ path('supprimer_commentaire',{'id':comment.id}) }}">
-                          Supprimer
-                        </button>
-                        <a href="{{ path('update_comment',{'id':comment.id}) }}">Modifier</a>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
-                            Modifier
-                          </button>
-                        {% endif %}
-				{% endfor %}
-                    </div>
-                    <div class="col-xs2 col-sm3" id="ajout-commentaire">
-                        <h2>Ajouter un commentaire</h2>
-                        {{ form(commentForm) }}
-                    </div>
-                </div>
-
-
-                      <!-- Modifier Modal-->
-                      <div class="modal fade" id="basicModal" tabindex="-1">
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title">Modifier Votre Commenaire</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            {{ form_start(form) }}
-                            <div class="modal-body">
-                                <div class="form-group ">
-                                    <label class="control-label col-lg-2">Content</label>
-                                    <div class="col-lg-10">
-                                  
-                                      {{form_widget(form.content,{'attr':{'class':'form-control' }})}}
-                                     
-                                    </div>
-                                  </div>
-                            </div>
-                            
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              {{form_widget(form.Update,{'attr':{'class':'btn btn-theme'}})}}
-                              
-                            </div>
-                            {{ form_end(form) }}
-                          </div>
-                        </div>
-                      </div><!-- End Modifier Modal-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            </div>
-        </div>
-    </section>
-</section>
 <script src="{{ asset('js/scripts.js')}}"></script>
+
+
+ <!-- ======= Breadcrumbs ======= -->
+ <section id="breadcrumbs" class="breadcrumbs">
+  <div class="container">
+
+    <div class="d-flex justify-content-between align-items-center">
+      <h2>Publication par {{ publication.user.nom }} {{ publication.user.prenom }}</h2>
+     
+    </div>
+
+  </div>
+</section><!-- End Breadcrumbs -->
+
+
+
+
+<!-- ======= Blog Single Section ======= -->
+<section id="blog" class="blog">
+  <div class="container" data-aos="fade-up">
+
+    <div class="row">
+
+      <div class="col-lg-8 entries">
+
+        <article class="entry entry-single">
+
+          <div class="entry-img">
+            {% if publication.image|length > 0 %}
+                <img src="{{ asset('uploads/'~ publication.image ) }}" alt="" class="img-fluid">
+                {% else %}
+                <img src="{{ asset('uploads/'~ "Not Found.jpg" ) }}" alt="" class="img-fluid">
+                {% endif %}
+         
+          </div>
+
+          <h2 class="entry-title">
+            <a href="blog-single.html">{{ publication.titre }}</a>
+          </h2>
+
+          <div class="entry-meta">
+            <ul>
+              <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">{{ publication.user.nom }} {{ publication.user.prenom }}</a></li>
+              <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time datetime="2020-01-01">{{ publication.date|date("d/m/Y") }}</time></a></li>
+              <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">{{ publication.comments | length }}</a></li>
+            </ul>
+          </div>
+
+          <div class="entry-content">
+            <p>
+              {{ publication.text|striptags }}
+            </p>
+
+            
+
+          </div>
+
+         
+
+        </article><!-- End blog entry -->
+
+        <div class="blog-comments">
+
+          <h4 class="comments-count">{{ publication.comments | length }} Commentaire(s)</h4>
+          {% for comment in publication.comments %}
+          <div id="comment-1" class="comment">
+            <div class="d-flex">
+              <div class="comment-img"><img src="{{ asset('uploads/'~ comment.user.image ) }}" class="rounded-circle float-left" alt=""></div>
+              <div>
+                <h5><a href="">{{ comment.user.nom }} {{ comment.user.prenom }}</a> </h5>
+                <time datetime="2020-01-01">Publié le {{comment.createdAt|date("d/m/Y") }}</time>
+                <p>
+                  {{comment.content|raw}}
+                </p>
+                {% if (app.user.id == comment.user.id) or ( is_granted('ROLE_ADMIN') ) %}
+                <a href="{{ path('supprimer_commentaire',{'id':comment.id}) }}">                          
+                    Supprimer                          
+                </a>
+                <a href="{{ path('update_comment',{'id':comment.id}) }}">Modifier</a>
+                {% endif %}
+              </div>
+            </div>
+          </div><!-- End comment #1 -->
+          {% endfor %}
+
+        </div><!-- End blog comments -->
+
+          <div class="reply-form">
+            <h4>Laisser un commentaire</h4>
+
+
+            <div class="col-xs2 col-sm3" id="ajout-commentaire">
+              
+              {{ form(commentForm) }}
+          </div>
+          {{ form_start(commentForm,{'attr':{'novalidate':'novalidate'}}) }}       
+              <div class="row">
+                <div class="col form-group">
+                  {{form_widget(commentForm.content,{'attr':{'class':'form-control', 'placeholder':'votre commentaire'}})}}
+                  {{form_errors(commentForm.content,{'attr':{'class':'text-danger'}}) }}
+                </div>
+              </div>
+              {{form_widget(commentForm.Ajouter,{'attr':{'class':'getstarted'}})}}
+             
+              {{ form_end(commentForm) }}       
+            
+
+          </div>
+
+        </div><!-- End blog comments -->
+
+      </div><!-- End blog entries list -->
+
+      <div class="col-lg-4">
+
+    
+
+      </div><!-- End blog sidebar -->
+
+    </div>
+
+  </div>
+
+  <!-- Modifier Modal-->
+  <div class="modal fade" id="basicModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modifier Votre Commenaire</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        {{ form_start(form) }}
+        <div class="modal-body">
+            <div class="form-group ">
+                <label class="control-label col-lg-2">Content</label>
+                <div class="col-lg-10">
+              
+                  {{form_widget(form.content,{'attr':{'class':'form-control' }})}}
+                 
+                </div>
+              </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          {{form_widget(form.Update,{'attr':{'class':'btn btn-theme'}})}}
+          
+        </div>
+        {{ form_end(form) }}
+      </div>
+    </div>
+  </div><!-- End Modifier Modal-->
+</section><!-- End Blog Single Section -->
 
 
 {% endblock %}

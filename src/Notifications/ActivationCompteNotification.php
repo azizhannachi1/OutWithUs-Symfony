@@ -49,7 +49,7 @@ class ActivationCompteNotification
             // Corps du message
             ->setBody(
                 $this->renderer->render(
-                    'emails/activation2.html.twig',
+                    'emails/activation.html.twig',
                     ['token' => $user->getActivationToken()]
                 ),
                 'text/html'

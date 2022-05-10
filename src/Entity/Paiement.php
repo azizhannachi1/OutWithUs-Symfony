@@ -70,6 +70,16 @@ class Paiement
      */
     private $email;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Evenement::class, inversedBy="paiements")
+     */
+    private $evenement;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="paiements")
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -155,6 +165,30 @@ class Paiement
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getEvenement(): ?Evenement
+    {
+        return $this->evenement;
+    }
+
+    public function setEvenement(?Evenement $evenement): self
+    {
+        $this->evenement = $evenement;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

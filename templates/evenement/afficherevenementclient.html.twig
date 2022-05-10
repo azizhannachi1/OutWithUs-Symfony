@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <div class="section section-team text-center">
+        <div class="container">
+            <h2 class="title">Our Events</h2>
+            <div class="team">
+                <div class="row">
+
+
+
+
+
+
+
+                    {% for i in tableevents %}
+                    <div class="col-md-4">
+
+                        <div class="team-player">
+                            <img src="{{ asset('uploads/'~ i.image ) }}" alt="Thumbnail Image" class="rounded-circle img-fluid img-raised">
+                            <h4 class="title">{{ i.NomEvent }}</h4>
+                            <p class="category text-primary">{{ i.PrixEvent }}</p>
+                            <p class="category text-primary">{{(i.DateEvent).format('d/m/Y')}}</p>
+                            <p class="description">{{ i.DescriptionEvent  }}
+                                </p>
+                                <a href="{{ path('publication_like', {'id': p.id}) }}" class="btn btn-link js-like">
+                                    {% if p.isLikeByUserId(4) %}
+                                    <i class="bi bi-hand-thumbs-up-fill"></i>
+                                     {% else %}                            
+                                     <i class="bi bi-hand-thumbs-up"></i>
+                                     {% endif %}
+                                     <span class="js-likes">{{ p.likes | length }}</span>
+                                     <span class="js-label">J'aime</span>
+                                     
+                                 </a> 
+
+
+                        </div>
+
+                    </div>
+
+
+                    {% endfor %}
+                    <!--div>
+                    {% for f in nombredislike %}
+                        {{ f }}
+                    {% endfor %}
+                    {% for c in nombreslike %}
+                        {{ c}}
+                    {% endfor %}
+
+                    </div-->
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+            s1.async=true;
+            s1.src='https://embed.tawk.to/6266cd0fb0d10b6f3e6f48a4/1g1gp21qb';
+            s1.charset='UTF-8';
+            s1.setAttribute('crossorigin','*');
+            s0.parentNode.insertBefore(s1,s0);
+        })();
+    </script>
+    <script type="text/javascript">
+        var vsid = "kc24320b0037085";
+        (function() {
+            var vsjs = document.createElement('script'); vsjs.type = 'text/javascript'; vsjs.async = true; vsjs.setAttribute('defer', 'defer');
+            vsjs.src = 'https://www.leadchatbot.com/vsa/chat.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(vsjs, s);
+        })();
+    </script>
+
+    <script src="https://unpkg.com/axios@0.26.1/dist/axios.min.js"></script>
+<script>
+    function onClickBtnLike(event){
+      event.preventDefault();
+
+      const url=this.href;
+      const spanCount=this.querySelector('span.js-likes');
+      const icone= this.querySelector('i');
+
+      axios.get(url).then(function (response){
+          spanCount.textContent=response.data.likes;
+          if (icone.classList.contains('bi-hand-thumbs-up-fill'))
+              icone.classList.replace('bi-hand-thumbs-up-fill','bi-hand-thumbs-up');
+          else
+              icone.classList.replace('bi-hand-thumbs-up','bi-hand-thumbs-up-fill');
+      })
+    }
+
+    document.querySelectorAll('a.js-like').forEach(function (link){
+        link.addEventListener('click',onClickBtnLike);
+    })
+</script>
+{% endblock %}

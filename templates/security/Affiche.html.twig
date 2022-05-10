@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+<br /><br /><br /><br />
+
+
+       <section id="main-content">
+      <section class="wrapper">
+        <h3><i class="fa fa-angle-right"></i> Liste des Utilisateurs</h3>
+        <div class="row mb">
+          <!-- page start-->
+          <div class="content-panel">
+        
+            <div class="adv-table">
+              <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info">
+                <thead>
+                  <tr>
+                   
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>email</th>
+                    <th>Username</th>
+                    <th>Action</th>
+                  
+                  </tr>
+                </thead>
+                <tbody>
+         
+          <tr {% for u in user %}>
+
+           
+               <td>{{ u.nom }}</td>
+                  <td>{{ u.prenom }}</td>
+                     <td>{{ u.email }}</td>
+                        <td>{{ u.username }}</td>
+                        
+            
+      
+            <td><a href="{{ path('user_edit',{'id':u.id}) }}">Modifier</a></td>
+           
+           
+
+
+
+        </tr {% endfor %}>
+                </tbody>
+              </table>
+             
+            </div>
+          </div>
+          <!-- page end-->
+        </div>
+        {{ knp_pagination_render(user) }}
+        <!-- /row -->
+      </section>
+      <!-- /wrapper -->
+    </section>
+
+{% endblock %}

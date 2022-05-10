@@ -14,12 +14,24 @@ class PaiementType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('carte',TextType::class)
-            ->add('year',TextType::class)
-            ->add('month',TextType::class)
-            ->add('cvc',TextType::class)
-            ->add('prix',TextType::class)
-            ->add('email',TextType::class) 
+            ->add('carte',TextType::class, [
+                'attr' => array('readonly' => true)
+            ])
+            ->add('year',TextType::class, [
+                'attr' => array('readonly' => true)
+            ])
+            ->add('month',TextType::class, [
+                'attr' => array('readonly' => true)
+            ])
+            ->add('cvc',TextType::class, [
+                'attr' => array('readonly' => true)
+            ])
+            ->add('prix',TextType::class, [
+                'attr' => array('readonly' => true)
+            ])
+            ->add('email',TextType::class, [
+                'attr' => array('readonly' => true)
+            ]) 
             ;
     }
 

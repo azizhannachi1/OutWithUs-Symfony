@@ -10,14 +10,11 @@ use Doctrine\Common\Collections\Collections;
 use Sension\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use App\Entity\Users;
+use App\Entity\User;
 
 
 /**
- * Publication
- *
- * @ORM\Table(name="publication", indexes={@ORM\Index(name="userId_fk", columns={"userId"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass=PublicationRepository::class)
  */
 class Publication
 {
@@ -33,35 +30,35 @@ class Publication
     /**
      * @var string
      *
-     * @ORM\Column(name="Titre", type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $titre;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="Text", type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $text;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="userId", type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $userid;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $image;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="userEmail", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $useremail;
 
@@ -82,6 +79,12 @@ class Publication
      * @ORM\OneToMany(targetEntity=PublicationLike::class, mappedBy="publication")
      */
     private $likes;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="publications")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user; 
 
     public function __construct()
     {
@@ -239,5 +242,42 @@ class Publication
         return false;
     }
 
+      /**
+     * @param \App\Entity\User $user
+     * @return bool
+     */
+    public function isLikeByUser(User $user):bool{
+        foreach ($this->likes as $Like){
+            if ($Like->getUser() === $user)return true;
+        }
+        return false;
+    }
+
+     /**
+     * @param \App\Entity\User $user
+     * @return bool
+     */
+    public function PublicationByUser(User $user):bool{
+        foreach ($this->user as $Users){
+            if ($Users->getUser() === $user)return true;
+        }
+        return false;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function nblike(){
+        return $this->likes->count();
+    }
 
 }

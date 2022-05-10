@@ -1,0 +1,116 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}
+<title>OutWithUs- Publication single</title>
+{% endblock %}
+
+{% block body %}
+<link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+
+<script src="{{ asset('js/scripts.js')}}"></script>
+
+
+ <!-- ======= Breadcrumbs ======= -->
+ <section id="breadcrumbs" class="breadcrumbs">
+  <div class="container">
+
+    <div class="d-flex justify-content-between align-items-center">
+      <h2>Evenement: {{ evenement.NomEvent }}</h2>
+     
+    </div>
+
+  </div>
+</section><!-- End Breadcrumbs -->
+
+
+
+
+<!-- ======= Blog Single Section ======= -->
+<section id="blog" class="blog">
+  <div class="container" data-aos="fade-up">
+
+    <div class="row">
+
+      <div class="col-lg-8 entries">
+
+        <article class="entry entry-single">
+
+          <div class="entry-img">
+            {% if evenement.image|length > 0 %}
+                <img src="{{ asset('uploads/'~ evenement.image ) }}" alt="" class="img-fluid">
+                {% else %}
+                <img src="{{ asset('uploads/'~ "Not Found.jpg" ) }}" alt="" class="img-fluid">
+                {% endif %}
+         
+          </div>
+
+          <h2 class="entry-title">
+            <a href="blog-single.html">{{ evenement.NomEvent }}</a>
+          </h2>
+
+          <div class="entry-meta">
+            <ul>
+                <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time datetime="2020-01-01">{{ evenement.DateEvent|date("d/m/Y") }}</time></a></li>
+                <li class="d-flex align-items-center"><i class="bx bx-dollar"></i> <a href="#">{{ evenement.PrixEvent }}</a>
+            </ul>
+          </div>
+          <div class="entry-content">
+            <p>
+              {{ evenement.DescriptionEvent }}
+            </p>
+          <div class="entry-content">
+             
+            <div class="read-more">
+              <a href="{{ path('evenement_detail',{'id':evenement.id}) }}" data-bs-toggle="modal" data-bs-target="#verticalycentered">Réserver</a>
+            </div>
+          </div>
+
+        </article><!-- End blog entry -->
+
+        <div class="card">
+          <div class="card-body">
+          
+            <div class="modal fade" id="verticalycentered" tabindex="-1">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Réserver pour l'évenement {{ evenement.NomEvent }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    {{ form_start(paiementForm,{'attr':{'novalidate':'novalidate'}}) }} 
+                    {{form_widget(paiementForm.carte,{'attr':{'class':'form-control', 'placeholder': 'Numéro de la carte'}})}}
+                    {{form_widget(paiementForm.year,{'attr':{'class':'form-control', 'placeholder': 'Année d expiration'}})}}
+                    {{form_widget(paiementForm.month,{'attr':{'class':'form-control', 'placeholder': 'Mois d expiration'}})}}
+                    {{form_widget(paiementForm.cvc,{'attr':{'class':'form-control', 'placeholder': 'CVC'}})}}
+                    
+                    {{form_widget(paiementForm.prix,{'attr':{'class':'form-control'}})}}
+                    {{form_widget(paiementForm.email,{'attr':{'class':'form-control', 'placeholder': 'Votre email...'}})}}
+                    {{form_widget(paiementForm.Reserver,{'attr':{'class':'btn btn-primary w-100'}})}}          
+                    {{ form_end(paiementForm) }}   
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    
+                  </div>
+                </div>
+              </div>
+            </div><!-- End Vertically centered Modal-->
+
+          </div>
+        </div>
+
+
+     
+
+      </div><!-- End blog entries list -->
+
+
+    </div>
+
+  </div>
+
+</section><!-- End Blog Single Section -->
+
+
+{% endblock %}

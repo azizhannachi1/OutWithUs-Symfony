@@ -42,6 +42,11 @@ class Comments
      */
     private $user_id;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +96,18 @@ class Comments
     public function setUserId(?int $user_id): self
     {
         $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

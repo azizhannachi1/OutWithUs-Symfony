@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+<br /><br /><br /><br />
+
+
+       <section id="main-content">
+      <section class="wrapper">
+        <h3><i class="fa fa-angle-right"></i> Liste de vos Publications</h3>
+        <div class="row mb">
+          <!-- page start-->
+          <div class="content-panel">
+        
+        
+            <div class="adv-table">
+              <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info">
+                <thead>
+                  <tr>
+                   
+                    <th>Titre</th>
+                    <th>Text</th>
+                    <th>Image</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                   
+                    
+                  </tr>
+                </thead>
+                <tbody>
+         
+          <tr {% for p in publication %}>
+
+           
+            <td>{{ p.titre }}</td>
+               <td>{{ p.text|striptags }}</td>
+               {% if p.image|length > 0 %}
+               <td><img src="{{ asset('uploads/'~ p.image )|imagine_filter('square') }}" width="250" height="150"></td>
+           {% else %}
+               <td><img src="{{ asset('uploads/'~ "Not found.jpg" ) }}" width="250" height="150"></td>
+           {% endif %}
+           <td>{{ p.date ? p.Date|date('Y-m-d') : '' }}</td>
+            <td>
+              <a href="{{ path('publication_edit',{'id':p.id}) }}">Modifier</a>
+              <a href="{{ path('delete_pub',{'id':p.id}) }}">Supprimer</a>
+             
+            </td>
+            
+           
+
+
+
+        </tr {% endfor %}>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- page end-->
+        </div>
+        <!-- /row -->
+      </section>
+      <!-- /wrapper -->
+    </section>
+
+{% endblock %}

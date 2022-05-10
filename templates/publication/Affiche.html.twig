@@ -13,15 +13,16 @@
         
         
             <div class="adv-table">
-              <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info">
+              <table cellpadding="0" cellspacing="0" border="0" class="table table-hover" id="hidden-table-info">
                 <thead>
                   <tr>
-                   
+                    <th>Actions</th>
+                    <th>Créateur</th>
                     <th>Titre</th>
                     <th>Text</th>
                     <th>Image</th>
                     <th>Date</th>
-                    <th>Actions</th>
+                   
                    
                     
                   </tr>
@@ -30,20 +31,21 @@
          
           <tr {% for p in publication %}>
 
-           
-            <td>{{ p.titre }}</td>
-               <td>{{ p.text|striptags }}</td>
-               {% if p.image|length > 0 %}
-               <td><img src="{{ asset('uploads/'~ p.image )|imagine_filter('square') }}" width="250" height="150"></td>
-           {% else %}
-               <td><img src="{{ asset('uploads/'~ "Not found.jpg" ) }}" width="250" height="150"></td>
-           {% endif %}
-           <td>{{ p.date ? p.Date|date('Y-m-d') : '' }}</td>
             <td>
               <a href="{{ path('publication_edit',{'id':p.id}) }}">Modifier</a>
               <a href="{{ path('delete_pub',{'id':p.id}) }}">Supprimer</a>
              
             </td>
+            <td>{{ p.user.nom}}</td>
+            <td>{{ p.titre }}</td>
+               <td>{{ p.text|striptags }}</td>
+               {% if p.image|length > 0 %}
+               <td><img src="{{ asset('uploads/'~ p.image )|imagine_filter('square') }}" width="100" height="150"></td>
+           {% else %}
+               <td><img src="{{ asset('uploads/'~ "Not found.jpg" ) }}" width="100" height="150"></td>
+           {% endif %}
+           <td>{{ p.date ? p.Date|date('Y-m-d') : '' }}</td>
+            
             
            
 

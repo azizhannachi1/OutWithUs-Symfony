@@ -1,0 +1,53 @@
+
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+<br><br><br><br><br><br>
+<section id="main-content">
+    <section class="wrapper site-min-height">
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Ajouter un Evenement</h1>
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div >
+                <div class="row">
+                    <div class="col-xl-6 align-content-center" >
+                        <br><br>
+                        <div class="form-group">
+                            {{ form_start(formulaire,{'attr': {'novalidate': 'novalidate'}} ) }}
+                            <div class="form-group">
+                                {{ form_widget(formulaire.NomEvent, {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Nom Evenement'}} ) }}
+                                {{ form_errors(formulaire.NomEvent ) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_widget(formulaire.DescriptionEvent, {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Description'}} ) }}
+                                {{ form_errors(formulaire.DescriptionEvent ) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_widget(formulaire.DateEvent , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Date Event'}} ) }}
+                                {{ form_errors(formulaire.DateEvent) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_widget(formulaire.PrixEvent , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Prix Event '}} ) }}
+                                {{ form_errors(formulaire.PrixEvent) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_widget(formulaire.image , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'image '}} ) }}
+                                {{ form_errors(formulaire.image) }}
+                            </div>
+                        </div>
+                        {{ form_end(formulaire) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </section>
+    <!-- /wrapper -->
+</section>
+{% endblock %}

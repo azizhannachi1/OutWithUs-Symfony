@@ -4,12 +4,12 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * Categories
  *
  * @ORM\Table(name="categories")
  * @ORM\Entity
- * @Groups("categories:read")
  */
 class Categories
 {

@@ -77,9 +77,10 @@ class Reclamation
     private $sujet;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reclamations")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $telephone;
+    private $user;
 
     public function getId(): ?int
     {
@@ -158,14 +159,14 @@ class Reclamation
         return $this;
     }
 
-    public function getTelephone(): ?string
+    public function getUser(): ?User
     {
-        return $this->telephone;
+        return $this->user;
     }
 
-    public function setTelephone(?string $telephone): self
+    public function setUser(?User $user): self
     {
-        $this->telephone = $telephone;
+        $this->user = $user;
 
         return $this;
     }

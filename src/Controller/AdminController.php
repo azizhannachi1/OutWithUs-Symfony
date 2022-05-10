@@ -7,9 +7,31 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CategorieResRepository;
 use App\Repository\ReclamationRepository;
+use App\Repository\UserRepository;
+use App\Repository\CommentsRepository;
+use App\Repository\PublicationRepository;
+use App\Repository\PaiementRepository;
+use App\Repository\EvenementRepository;
+
 
 class AdminController extends AbstractController
 {
+
+       /**
+     * @Route("/back", name="app_back")
+     */
+    public function back(ReclamationRepository $reclamationRepository, UserRepository $userRepository, 
+      CommentsRepository $commentsRepository, PublicationRepository $publicationRepository,
+      PaiementRepository $paiementRepository, EvenementRepository $eventRespository): Response
+    {
+       
+
+
+        return $this->render('admin/back.html.twig', [
+           ' reclamations'=> $reclamationRepository->findAll(),
+        ]);
+    }
+
     /**
      * @Route("/admin", name="app_admin")
      */
@@ -59,5 +81,7 @@ class AdminController extends AbstractController
             'reclamationsCount' => json_encode($reclamationsCount)
         ]);
     }
+
+  
    
 }

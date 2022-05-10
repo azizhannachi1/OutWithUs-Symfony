@@ -1,0 +1,55 @@
+{% extends 'base2.html.twig' %}
+{% block title %}
+<title>OutWithUs- User details</title>
+{% endblock %}
+{% block body %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIu=" crossorigin="anonymous">
+
+ <!-- ======= Breadcrumbs ======= -->
+ <section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Vos données</h2>
+        <ol>
+          <li><a href="index.html">Home</a></li>
+         
+        </ol>
+      </div>
+
+    </div>
+  </section><!-- End Breadcrumbs -->
+
+  <!-- ======= Team Section ======= -->
+  <section id="team" class="team ">
+    <div class="container">
+
+      <div class="row">
+
+        <div class="col-lg-6">
+          <div class="member d-flex align-items-start">
+            <div class="pic">
+                {% if user.image|length > 0 %}
+                <img src="{{ asset('uploads/'~ user.image ) }}" class="img-fluid" alt="">
+                {% else %}
+                <img src="{{ asset('uploads/'~ "Not Found.jpg" ) }}" class="img-fluid" alt="">
+                {% endif %}
+            </div>
+            <div class="member-info">
+              <h4>Nom:</h4> {{ user.nom }}
+              <h4>Prenom: </h4>{{ user.prenom }}
+              <h4>email:</h4> {{ user.email }}
+              <div class="social">
+                <a href="{{ path('user_edit',{'id':user.id}) }}"><i class="bx bx-edit"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+  </section><!-- End Team Section -->
+
+{% endblock %}

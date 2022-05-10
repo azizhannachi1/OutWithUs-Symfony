@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Paiement;
+use App\Entity\User;
+use App\Entity\Evenement;
 use App\Repository\PaiementRepository;
 use App\Form\PaiementType;
 use App\Services\QrcodeService;
@@ -21,6 +23,10 @@ use Endroid\QrCode\Label\Alignment\LabelAlignmentCenter;
 use Endroid\QrCode\Label\Margin\Margin;
 use Endroid\QrCode\Writer\PngWriter;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mine\Email;
 
 
 class PaiementController extends AbstractController
@@ -50,8 +56,8 @@ class PaiementController extends AbstractController
      /**
      * @Route("paiement/Update/{id}",name="u")
      */
-    function Update(PaiementRepository $repository, $id, Request $request){
-        $paiement=$repository->find($id);
+    function Update(PaiementRepository $repository, $id, Request $request,\Swift_Mailer $mailer){
+        $paiement=$repository->findOneBy(['id' => $id]);
         $form=$this->createForm(PaiementType::class,$paiement);
         $form->add('status',ChoiceType::class,[
             'choices'=> array(
@@ -60,14 +66,30 @@ class PaiementController extends AbstractController
                 'Annulé'=>'Annulé',
             ),
         ]);
-       
-        $form->add('Update',SubmitType::class);
+      
+        
+        $form->add('Modifier',SubmitType::class);
        
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $em=$this->getDoctrine()->getManager();
 
             $em->flush();
+
+            $message = (new \Swift_Message('New'))
+
+            ->setFrom('azizhannachi98@gmail.com')
+
+            ->setTo($paiement->getEmail())
+            
+            ->setSubject('Status de paiement')
+            ->setBody('Bonjour Monsieur '.$paiement->getUser()->getNom().'. '.
+            'Le status de votre réservation pour l evenement '.$paiement->getEvenement()->getNomEvent().
+            ' est :'.$paiement->getStatus() );
+            
+ 
+   
+            $mailer->send($message); 
             return $this->redirectToRoute('AfficheP');
         }
         return $this->render('paiement/Update.html.twig',[
@@ -145,7 +167,7 @@ class PaiementController extends AbstractController
     
             $result=Builder::create()
             ->writer(new PngWriter())
-            ->data(" | Bonjour Mr/Mrs propiétaire du carte numéro:".$cli->getCarte()." | Avec addresse email: ".$cli->getEmail()." | Votre status de paiement est: ".$cli->getStatus())
+            ->data(" | Bonjour Mr/Mrs :".$cli->getUser()->getNom()." | votre réservation de l'evenement: ".$cli->getEvenement()->getNomEvent(). " | Votre status de paiement est: ".$cli->getStatus())
             ->encoding(new Encoding('UTF-8'))
             ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
             ->size(300)
@@ -240,4 +262,5 @@ class PaiementController extends AbstractController
         ]);
             }
 
+      
 }

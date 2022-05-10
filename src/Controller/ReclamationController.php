@@ -17,6 +17,7 @@ use Symfony\Component\Mine\Email;
 use Sension\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use App\Repository\UserRepository;
 
 class ReclamationController extends AbstractController
 {
@@ -93,10 +94,13 @@ class ReclamationController extends AbstractController
  /**
      * @param Request $request
      * @return \Symfony\Component\\HttpFoundation\Response
-     * @Route("reclamation/Add")
+     * @Route("reclamation/Add", name="Ajout_reclamation")
      */
-    function Add(Request $request,\Swift_Mailer $mailer) {
+    function Add(Request $request,\Swift_Mailer $mailer, UserRepository $userRepository): Response {
         $reclamation = new Reclamation();
+        $user=$this->getUser();
+       // $utilisateur = $userRepository->findOneBy(array('username' =>$user),null,1,0);
+        $reclamation->setUser($user);
         $form=$this->createForm(ReclamationType::class,$reclamation);
        
         $form->add('Ajouter',SubmitType::class);
@@ -109,8 +113,8 @@ class ReclamationController extends AbstractController
             $date = new \DateTime('now');
 
             $reclamation->setDate($date);
-            
-           
+
+          
 
             $em->persist($reclamation);
             $em->flush();
@@ -134,12 +138,12 @@ class ReclamationController extends AbstractController
           
              
             
-        return $this->redirectToRoute('AfficheR');
+        return $this->redirectToRoute('app_main');
         }
         return $this->render('reclamation/Add.html.twig',[
             'f'=>$form->createView()
         ]);
-            }
+        }
 
 
             /**
@@ -147,8 +151,11 @@ class ReclamationController extends AbstractController
      * @return \Symfony\Component\\HttpFoundation\Response
      * @Route("reclamation/New")
      */
-    function New(Request $request){
+    function New(Request $request,\Swift_Mailer $mailer, UserRepository $userRepository){
         $reclamation = new Reclamation();
+        $user=$this->getUser();
+       // $utilisateur = $userRepository->findOneBy(array('username' =>$user),null,1,0);
+        $reclamation->setUser($user);
         $form=$this->createForm(ReclamationType::class,$reclamation);
        
                 $form->add('Ajouter',SubmitType::class);
@@ -162,6 +169,21 @@ class ReclamationController extends AbstractController
 
             $em->persist($reclamation);
             $em->flush();
+
+            $message = (new \Swift_Message('New'))
+
+            ->setFrom('azizhannachi98@gmail.com')
+
+            ->setTo($reclamation->getEmail())
+            
+            ->setSubject('Réclamation bien envoyée')
+            ->setBody('Bonjour Monsieur '.$reclamation->getNom().'. '.
+            'Cet email est pour confirmer l envoi de votre réclamation concernant '.$reclamation->getSujet()->getNom().
+            '. Merci pour votre confiance' );
+            
+ 
+   
+            $mailer->send($message); 
             
         return $this->redirectToRoute('index');
         }

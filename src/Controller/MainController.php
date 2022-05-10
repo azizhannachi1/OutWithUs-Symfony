@@ -10,7 +10,7 @@ use App\Repository\CalendarRepository;
 class MainController extends AbstractController
 {
     /**
-     * @Route("/", name="app_main")
+     * @Route("/calendrier", name="app_main")
      */
     public function index(CalendarRepository $calendar): Response
     {
